@@ -36,3 +36,57 @@
     transform: rotate(360deg);
   }
 }
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #6d28d9, #c4b5fd, #ffffff);
+}
+
+.card {
+  background: white;
+  padding: 32px;
+  border-radius: 20px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.title {
+  color: #6d28d9;
+  margin-bottom: 16px;
+}
+
+.text {
+  color: #555;
+  margin-bottom: 24px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.yes {
+  background: #6d28d9;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.no {
+  background: white;
+  color: #6d28d9;
+  border: 2px solid #6d28d9;
+  padding: 10px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
