@@ -152,7 +152,7 @@ export default function App() {
                 <>
                   <h1 style={styles.title}>Hii Joy, it's Vicky here... 💜</h1>
                   <p style={styles.text}>
-                    I’ve been thinking about you a lot. I really like you, and I’m hoping you feel the same way.
+                    Just wanted to let you know that you’ve been on my mind more than usual lately. I really like you, and I’d be lying if I said I wasn't hoping you felt that same connection. Is it just me, or is there something there?
                     <span style={styles.highlight}>Joy, will you be my girlfriend? 💍</span>
                   </p>
                   <div style={styles.buttonContainer}>
