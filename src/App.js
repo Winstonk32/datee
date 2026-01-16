@@ -16,7 +16,7 @@ export default function App() {
   const audioRef = useRef(null);
   const [photoList, setPhotoList] = useState([img1, img2, img3, img4]);
   
-  // Track window width for responsive styling
+  // Responsive State
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   useEffect(() => {
@@ -52,39 +52,21 @@ export default function App() {
     setTimeout(() => setShowEnvelope(false), 2000);
   };
 
-  const responsiveStyles = {
-    contentLayout: {
-      ...styles.contentLayout,
-      flexDirection: isMobile ? "column" : "row",
-      padding: isMobile ? "80px 20px" : "20px",
-    },
-    photoStack: {
-      ...styles.photoStack,
-      width: isMobile ? "240px" : "280px",
-      height: isMobile ? "300px" : "360px",
-    },
-    card: {
-      ...styles.card,
-      width: isMobile ? "100%" : "420px",
-      padding: isMobile ? "30px 20px" : "40px",
-    }
-  };
-
   return (
     <div style={styles.container}>
       <audio ref={audioRef} src={musicFile} loop />
 
       {/* Floating Sparkles & Hearts */}
-      {[...Array(12)].map((_, i) => (
+      {[...Array(15)].map((_, i) => (
         <motion.div
           key={i}
           initial={{ y: "110vh", opacity: 0, x: Math.random() * 100 + "vw" }}
           animate={{ y: "-10vh", opacity: [0, 1, 0] }}
-          transition={{ duration: 8 + Math.random() * 5, repeat: Infinity, delay: i * 1.5 }}
+          transition={{ duration: 7 + Math.random() * 5, repeat: Infinity, delay: i * 1.2 }}
           style={{ 
             ...styles.floatingParticle, 
-            fontSize: i % 2 === 0 ? "20px" : "12px",
-            color: i % 3 === 0 ? "#ff85a2" : "#d8b4fe"
+            fontSize: i % 2 === 0 ? "22px" : "14px",
+            color: i % 3 === 0 ? "#ff85a2" : "#fbb1bd"
           }}
         >
           {i % 2 === 0 ? "💖" : "✨"}
@@ -117,10 +99,18 @@ export default function App() {
             key="main-content" 
             initial={{ opacity: 0 }} 
             animate={{ opacity: 1 }} 
-            style={responsiveStyles.contentLayout}
+            style={{
+                ...styles.contentLayout,
+                flexDirection: isMobile ? "column" : "row",
+                padding: isMobile ? "60px 20px" : "20px",
+            }}
           >
             {/* --- PHOTO SECTION --- */}
-            <div style={responsiveStyles.photoStack}>
+            <div style={{
+                ...styles.photoStack,
+                width: isMobile ? "240px" : "280px",
+                height: isMobile ? "300px" : "360px",
+            }}>
               <AnimatePresence mode="popLayout">
                 {photoList.map((url, index) => (
                   <motion.div
@@ -137,7 +127,7 @@ export default function App() {
                     style={styles.polaroid}
                   >
                     <img src={url} alt="Joy & Vicky" style={styles.photo} />
-                    <div style={styles.captionText}>Forever? ✨</div>
+                    <div style={styles.captionText}>Moments ✨</div>
                   </motion.div>
                 ))}
               </AnimatePresence>
@@ -149,26 +139,30 @@ export default function App() {
               animate={{ 
                 opacity: 1, 
                 scale: 1,
-                boxShadow: ["0 0 20px #f3e8ff", "0 0 40px #d8b4fe", "0 0 20px #f3e8ff"]
+                boxShadow: ["0 0 20px #fbb1bd", "0 0 40px #ff85a2", "0 0 20px #fbb1bd"]
               }} 
               transition={{ boxShadow: { repeat: Infinity, duration: 3 } }}
-              style={responsiveStyles.card}
+              style={{
+                  ...styles.card,
+                  width: isMobile ? "100%" : "420px",
+                  padding: isMobile ? "30px 20px" : "40px",
+              }}
             >
               {!answer ? (
                 <>
                   <h1 style={styles.title}>Hii Joy, it's Vicky here... 💜</h1>
                   <p style={styles.text}>
-                    Just wanted to let you know that you’ve been on my mind more than usual lately. I really like you, and I’d be lying if I said I wasn't hoping you felt that same connection.
+                    I’ve been thinking about you a lot. I really like you, and I’m hoping you feel the same way.
                     <span style={styles.highlight}>Joy, will you be my girlfriend? 💍</span>
                   </p>
                   <div style={styles.buttonContainer}>
                     <motion.button 
-                      whileHover={{ scale: 1.05, backgroundColor: "#7e22ce" }} 
+                      whileHover={{ scale: 1.05, backgroundColor: "#ff4d6d" }} 
                       whileTap={{ scale: 0.95 }} 
                       style={styles.yesButton} 
                       onClick={() => setAnswer("yes")}
                     >
-                      Yes, a thousand times! 💜
+                      Yes, a thousand times! 💕
                     </motion.button>
                     <button style={styles.noButton} onClick={() => setAnswer("no")}>Let me think... 🤍</button>
                   </div>
@@ -176,7 +170,7 @@ export default function App() {
               ) : (
                 <motion.div initial={{ scale: 0.5 }} animate={{ scale: 1 }}>
                   <h2 style={styles.title}>
-                    {answer === "yes" ? "Best day of my life! 💜" : "I respect that 🤍"}
+                    {answer === "yes" ? "You just made me the happiest! 💖" : "I respect that 🤍"}
                   </h2>
                   <p style={styles.text}>
                     {answer === "yes" ? "I can't wait for everything we'll do together. ✨" : "You're still amazing to me."}
@@ -196,13 +190,14 @@ const styles = {
   container: {
     minHeight: "100vh",
     width: "100vw",
-    background: "linear-gradient(135deg, #ffffff 0%, #f3e8ff 50%, #e9d5ff 100%)",
+    background: "radial-gradient(circle, #fff0f3 0%, #fbb1bd 100%)",
     fontFamily: "'Inter', sans-serif",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     position: "relative",
-    overflowX: "hidden", // Prevent horizontal scroll on mobile
+    overflowX: "hidden",
+    boxSizing: "border-box",
   },
   floatingParticle: {
     position: "absolute",
@@ -215,7 +210,7 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(243, 232, 255, 0.9)",
+    backgroundColor: "rgba(255, 240, 243, 0.95)",
     zIndex: 1000,
   },
   contentLayout: {
@@ -226,7 +221,6 @@ const styles = {
     width: "100%",
     maxWidth: "1100px",
     zIndex: 1,
-    boxSizing: "border-box",
   },
   photoStack: {
     position: "relative",
@@ -239,14 +233,13 @@ const styles = {
     width: "100%",
     padding: "12px 12px 35px 12px",
     background: "#fff",
-    boxShadow: "0 10px 30px rgba(107, 33, 168, 0.15)",
+    boxShadow: "0 10px 30px rgba(255, 133, 162, 0.3)",
     borderRadius: "2px",
-    border: "1px solid #f3e8ff",
+    border: "1px solid #fecdd3",
   },
   photo: {
     width: "100%",
-    height: "70%",
-    minHeight: "180px",
+    height: "210px",
     objectFit: "cover",
     borderRadius: "1px",
   },
@@ -254,45 +247,42 @@ const styles = {
     fontFamily: "'Dancing Script', cursive",
     textAlign: "center",
     marginTop: "15px",
-    color: "#7e22ce",
-    fontSize: "20px",
+    color: "#ff85a2",
+    fontSize: "22px",
     fontWeight: "bold"
   },
   card: {
-    background: "rgba(255, 255, 255, 0.85)",
+    background: "rgba(255, 255, 255, 0.8)",
     backdropFilter: "blur(15px)",
     borderRadius: "40px 10px 40px 10px",
     textAlign: "center",
-    maxWidth: "420px",
     minWidth: "280px",
-    border: "2px solid #d8b4fe",
+    border: "2px solid #ff85a2",
     boxSizing: "border-box",
   },
   musicToggle: {
     position: "absolute",
     top: "20px",
     right: "20px",
-    width: "45px",
-    height: "45px",
+    width: "48px",
+    height: "48px",
     borderRadius: "50%",
-    border: "2px solid #d8b4fe",
+    border: "2px solid #ff85a2",
     background: "#fff",
     cursor: "pointer",
     zIndex: 100,
     fontSize: "18px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center"
+    boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
   },
   title: {
     fontFamily: "'Dancing Script', cursive",
-    color: "#6b21a8",
+    color: "#c9184a",
     fontSize: "32px",
     fontWeight: "800",
     marginBottom: "20px",
   },
   text: {
-    color: "#4c1d95",
+    color: "#590d22",
     fontSize: "17px",
     lineHeight: "1.6",
     marginBottom: "30px",
@@ -301,9 +291,9 @@ const styles = {
     display: "block",
     marginTop: "15px",
     fontWeight: "800",
-    fontSize: "20px",
-    color: "#9333ea",
-    textShadow: "0 0 10px rgba(168, 85, 247, 0.2)"
+    fontSize: "1.1em",
+    color: "#ff4d6d",
+    textShadow: "0 0 10px rgba(255, 77, 109, 0.2)"
   },
   buttonContainer: {
     display: "flex",
@@ -319,15 +309,14 @@ const styles = {
     cursor: "pointer",
     fontSize: "17px",
     fontWeight: "bold",
-    backgroundColor: "#9333ea",
+    backgroundColor: "#ff758f",
     color: "#fff",
-    boxShadow: "0 10px 20px rgba(147, 51, 234, 0.3)",
-    transition: "0.3s ease",
+    boxShadow: "0 10px 20px rgba(255, 117, 143, 0.4)",
   },
   noButton: {
     background: "none",
     border: "none",
-    color: "#7e22ce",
+    color: "#a4133c",
     cursor: "pointer",
     fontSize: "14px",
     textDecoration: "underline",
