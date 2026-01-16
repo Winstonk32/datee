@@ -22,7 +22,7 @@ const Envelope = ({ onOpen, onStartMusic }) => {
       {/* 1. The Inside Paper (Slides up) */}
       <motion.div
         initial={{ y: 0 }}
-        animate={{ y: isOpening ? -120 : 0 }}
+        animate={{ y: isOpening ? "-50%" : "0%" }}
         transition={{ delay: 0.5, duration: 1, ease: "easeInOut" }}
         style={envelopeStyles.letter}
       >
@@ -34,7 +34,7 @@ const Envelope = ({ onOpen, onStartMusic }) => {
       {/* 2. Envelope Body (Back) */}
       <div style={envelopeStyles.envelopeBack}></div>
 
-      {/* 3. Envelope Bottom/Sides (Creates the "pocket") */}
+      {/* 3. Envelope Bottom/Sides */}
       <div style={envelopeStyles.envelopeSides}></div>
 
       {/* 4. Envelope Top Flap */}
@@ -52,11 +52,10 @@ const Envelope = ({ onOpen, onStartMusic }) => {
           }
         }}
       >
-        {/* The Heart Seal on the flap */}
         <div style={envelopeStyles.heartSeal}>💜</div>
       </motion.div>
 
-      {/* 5. Front Label (Where the text is) */}
+      {/* 5. Front Label (Responsive Text) */}
       {!isOpening && (
         <motion.div 
           initial={{ opacity: 0 }}
@@ -79,19 +78,20 @@ const Envelope = ({ onOpen, onStartMusic }) => {
 
 const envelopeStyles = {
   container: {
-    width: '320px',
-    height: '210px',
+    width: 'min(90vw, 320px)', // Takes 90% of screen width, maxes at 320px
+    height: 'min(60vw, 210px)', // Keeps aspect ratio on mobile
     position: 'relative',
-    backgroundColor: '#fff', // Pure white base
+    backgroundColor: '#fff',
     borderRadius: '8px',
     cursor: 'pointer',
     perspective: '1000px',
-    boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
+    boxShadow: '0 15px 35px rgba(107, 33, 168, 0.2)', // Purple tinted shadow
+    margin: '0 auto',
   },
   envelopeBack: {
     position: 'absolute',
     inset: 0,
-    backgroundColor: '#f3e8ff', // Light purple
+    backgroundColor: '#f3e8ff',
     borderRadius: '8px',
     zIndex: 1,
   },
@@ -99,8 +99,8 @@ const envelopeStyles = {
     position: 'absolute',
     inset: 0,
     zIndex: 3,
-    backgroundColor: '#e9d5ff', // Slightly darker purple
-    clipPath: 'polygon(0% 0%, 100% 0%, 50% 50%, 100% 100%, 0% 100%)', // Creates the pocket shape
+    backgroundColor: '#e9d5ff',
+    clipPath: 'polygon(0% 0%, 100% 0%, 50% 50%, 100% 100%, 0% 100%)',
     borderRadius: '8px',
   },
   envelopeTop: {
@@ -109,7 +109,7 @@ const envelopeStyles = {
     left: 0,
     width: '100%',
     height: '100%',
-    backgroundColor: '#d8b4fe', // Solid Purple Flap
+    backgroundColor: '#d8b4fe',
     clipPath: 'polygon(0% 0%, 100% 0%, 50% 50%)',
     transformOrigin: 'top',
     display: 'flex',
@@ -117,36 +117,33 @@ const envelopeStyles = {
   },
   heartSeal: {
     position: 'absolute',
-    top: '30%', // Positioned near the point of the triangle
-    fontSize: '32px',
+    top: '25%',
+    fontSize: 'clamp(24px, 8vw, 32px)', // Scales font based on screen size
     filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))',
   },
   letter: {
     position: 'absolute',
-    top: '10px',
-    left: '20px',
-    right: '20px',
-    height: '180px',
+    inset: '10px 5%',
+    height: '90%',
     backgroundColor: '#fff',
     zIndex: 2,
     borderRadius: '4px',
-    padding: '20px',
+    padding: '15px',
     display: 'flex',
     flexDirection: 'column',
-    gap: '15px',
+    gap: '12px',
     boxShadow: '0 0 10px rgba(0,0,0,0.05)',
   },
   letterLine: {
     width: '100%',
-    height: '4px',
+    height: '3px',
     backgroundColor: '#f3e8ff',
     borderRadius: '2px',
   },
   label: {
     position: 'absolute',
-    zIndex: 20, // Guaranteed on top
-    width: '100%',
-    height: '100%',
+    zIndex: 20,
+    inset: 0,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -155,17 +152,17 @@ const envelopeStyles = {
   },
   toText: {
     fontFamily: "'Dancing Script', cursive",
-    color: '#000000', // Deep Purple
-    fontSize: '36px',
+    color: '#6b21a8',
+    fontSize: 'clamp(28px, 10vw, 38px)', // Dynamic scaling text
     margin: 0,
-    textShadow: '0 2px 4px rgba(255,255,255,0.8)',
+    textAlign: 'center',
   },
   clickText: {
     fontFamily: "'Inter', sans-serif",
     color: '#a855f7',
-    fontSize: '12px',
+    fontSize: 'clamp(10px, 3vw, 12px)',
     textTransform: 'uppercase',
-    letterSpacing: '2px',
+    letterSpacing: '1.5px',
     fontWeight: 'bold',
     marginTop: '5px',
   }
